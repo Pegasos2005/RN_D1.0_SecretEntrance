@@ -17,7 +17,9 @@ public class Main {
             var numberList = RotationList.fromRawLines(lines);
 
             int dial = 50;
-            System.out.println("Nº d veces acabadas en 0: " + DialControler.countMovsEndsInZero(numberList, dial));
+            DialControler dialControler = new DialControler(dial);
+
+            System.out.println("Nº d veces acabadas en 0: " + dialControler.countMovsEndsInZero(numberList));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

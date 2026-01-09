@@ -4,19 +4,35 @@ import software.RN.org.model.Rotation;
 import software.RN.org.model.RotationList;
 
 public class DialControler {
-    public static long countMovsEndsInZero(RotationList rotationList, int dial) {
+    private int dial;
+
+    public DialControler(int dial) {
+        this.dial = dial;
+    }
+
+    public long countMovsEndsInZero(RotationList rotationList) {
         long count = 0;
         for (int r = 0; r < rotationList.getRows(); r++) {
-            dial = moveDial(dial, rotationList.getRotation(r));
-            System.out.println("Dial: " + dial);
+            moveDialCountZero(rotationList.getRotation(r));
             if (dial == 0) count++;
         }
         return count;
     }
 
-    public static int moveDial(int dial, Rotation rotation) {
-        if (rotation.direction() == 'R') dial += rotation.distance();
-        else if (rotation.direction() == 'L') dial -= rotation.distance();
-        return dial%100;
+    public void moveDialCountZero(Rotation rotation) {
+        for (int i = 0; i < rotation.distance(); i++) {
+            if (rotation.direction() == 'R') {
+                dial++;
+            } else {
+                dial--;
+            }
+
+            // Revisamos el desbordamiento
+            if (dial > 99) {
+                dial = 0;
+            } else if (dial < 0) {
+                dial = 99;
+            }
+        }
     }
 }
